@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ChangeComment" script:language="StarBasic">Sub ChangeComment(CommentText)
+	SmartComment = SmartDialog.getControl(&quot;CommentLabel&quot;)
+	SmartComment.Model.Label = CommentText
+End Sub
+
+Sub ThemeListComment()
+	CommentText = &quot;เลือกโทนสี ตามที่ต้องการ&quot;
+	ChangeComment(CommentText)
+End Sub
+
+Sub EffectListComment()
+	CommentText = &quot;เลือกรูปแบบการไล่สี ได้ตามต้องการ หากเลือกวัตถุเพียง 1 ชิ้น จะเลือกรูปแบบการไล่สีได้เพียงรูปแบบเดียวคือ Solid Color แต่หากเลือกวัตถุมากกว่า 1 ชิ้น จะสามารถเลือกการไล่สีอัตโนมัติได้&quot;
+	ChangeComment(CommentText)
+End Sub
+
+Sub ColorComment()
+	CommentText = &quot;เลือกสี ตามที่ต้องการ&quot;
+	ChangeComment(CommentText)
+End Sub
+
+Sub CloseComment()
+	CommentText = &quot;ปิดหน้าต่างนี้&quot;
+	ChangeComment(CommentText)
+End Sub
+
+Sub DialogComment()
+	CommentText = &quot;เลือกโทนสี หลังจากนั้นเลือกรูปแบบการไล่สี แล้วเลือกสีที่ต้องการ&quot; &amp;CHR$(10)&amp;CHR$(10) &amp; &quot;หากเลือกวัตถุมากกว่า 1 ชิ้น จะสามารถเลือกรูปแบบการไล่สีอัตโนมัติได้ในช่องรูปแบบการไล่สี&quot;
+	ChangeComment(CommentText)
+End Sub
+</script:module>

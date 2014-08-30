@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="ManageList" script:language="StarBasic">Sub ModifyList()
+	ModifyAffectList(NewSelectedShape)
+End Sub
+
+Sub AddEffectListTemp()
+	AddEffectList(SelectedShape)
+	ModifyList()
+End Sub
+
+Sub RadioColorTemp()
+	RadioColor(SelectedShape)
+End Sub
+
+Sub AddEffectList(LastShape as Object)
+	SelectedColorCount = EffectListbox.getItemCount
+	If LastShape.count &gt; 1 Then
+		For i = 0 To SelectedColorCount - 1
+			EffectListbox.removeItems(i, SelectedColorCount)
+		Next i
+		
+		For i = 0 To UBound(EffectArray)
+			EffectListbox.addItem(EffectArray(i), i)
+		Next i
+		EffectListbox.selectItemPos(0, True)
+		
+	ElseIf LastShape.count &lt; 2 Then
+		For i = 0 To SelectedColorCount - 1
+			EffectListbox.removeItems(i, SelectedColorCount)
+		Next i
+		
+		EffectListbox.addItem(EffectArray(0), 0)
+		EffectListbox.selectItemPos(0, True)
+		
+	End If
+	
+	RadioColorTemp()
+	
+End Sub
+
+Sub RadioColor(LastShape as Object)
+	If EffectListbox.getSelectedItem &lt;&gt; &quot;&quot; Then
+		If EffectListbox.getSelectedItem = EffectArray(0) Then
+			If LastShape.count = 1 AND LastShape.getByIndex(0).SupportsService(&quot;com.sun.star.drawing.GroupShape&quot;) Then
+				LastShape2 = LastShape.getByIndex(0)
+			Else
+				LastShape2 = LastShape
+			End If
+			
+			For j = 0 To LastShape2.count-1
+				For k = 0 To UBound(ThemeArray)
+					If ThemeListbox.getSelectedItem = ThemeArray(k) Then
+						For l = 0 To UBound(AccentArray)
+							oButtonName = &quot;Accent&quot; &amp; l+1
+							oButton = SmartDialog.getControl(oButtonName)
+							oLabel = SmartDialog.getControl(&quot;ColorLabel&quot;)
+							oLabel.visible = True
+							oButton.visible = True
+							oButton.enable = True
+							&apos;oButton.Model.State = 0
+							oButton.Model.BackgroundColor = Acc(Eff(0, l), k, 1)
+						Next l
+						Exit For
+					End If
+				Next k
+			Next j
+			
+		ElseIf EffectListbox.getSelectedItem &lt;&gt; EffectArray(0) Then
+			For j = 0 To UBound(AccentArray)
+				oButtonName = &quot;Accent&quot; &amp; j+1
+				oButton = SmartDialog.getControl(oButtonName)
+				oLabel = SmartDialog.getControl(&quot;ColorLabel&quot;)
+				oButton.visible = False
+				oLabel.visible = False
+			Next j
+			
+			CheckTheme(nothing)
+		End If
+	ElseIf EffectListbox.getSelectedItem = &quot;&quot; Then
+		For i = 0 To UBound(AccentArray)
+			oButtonName = &quot;Accent&quot; &amp; i+1
+			oButton = SmartDialog.getControl(oButtonName)
+			oButton.enable = False
+		Next i
+	End If
+End Sub
+
+Sub CheckSelectedColor(LastShape as Object)
+	If (LastShape.count = 1 OR LastShape.count &gt; 1) AND LastShape.getByIndex(0).SupportsService(&quot;com.sun.star.drawing.GroupShape&quot;) Then
+		LastShape2 = LastShape.getByIndex(0)
+	Else
+		LastShape2 = LastShape
+	End If
+	
+	For i = 0 To LastShape2.count-1
+		If Left(LastShape2.getByIndex(i).Name, 6) = &quot;Object&quot; OR Left(LastShape2.getByIndex(i).Name, 6) = &quot;Arrow&quot; &amp; i+1 Then
+			For j = 0 To UBound(ThemeArray)
+				If int(Left(LastShape2.getByIndex(i).Description, 2)) = j Then
+					ThemeListbox.SelectItemPos(j, True)
+					EffectListbox.SelectItemPos(0, True)
+					For k = 0 To UBound(AccentArray)
+						If LastShape.count &gt; 1 Then
+							oButtonName = &quot;Accent&quot; &amp; k+1
+							oButton = SmartDialog.getControl(oButtonName)
+							&apos;oButton.Model.State = 0
+						ElseIf Right(LastShape2.getByIndex(i).Description, 7) = AccentArray(k) Then
+							oButtonName = &quot;Accent&quot; &amp; k+1
+							oButton = SmartDialog.getControl(oButtonName)
+							&apos;oButton.Model.State = 1
+							Exit For
+						End If
+					Next k		
+					Exit For
+					
+				End If
+			Next j
+			Exit For
+			
+		End If
+	Next i
+End Sub
+</script:module>

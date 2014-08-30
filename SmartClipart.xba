@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="SmartClipart" script:language="StarBasic">Sub FillColor(gStart,gEnd, i, SelectedThemeCode, DescSelectColor)
+	NewCurrentShape = SelectedShape.getByIndex(i)
+	
+	Dim oNewGradient as New com.sun.star.awt.Gradient
+	Dim oOldGradient as New com.sun.star.awt.Gradient
+	
+	with oNewGradient &apos;Assign new gradient to oNewGradient
+		.StartColor = gStart
+		.StartIntensity = 100
+		.EndColor = gEnd
+		.EndIntensity = 100
+	end with
+	
+	If NewCurrentShape.FillStyle = 1 Then
+		NewCurrentShape.FillColor = gStart
+	ElseIf NewCurrentShape.FillStyle = 2 Then
+		NewCurrentShape.FillGradient = oNewGradient
+	EndIf
+	
+	NewCurrentShape.Description = SelectedThemeCode
+	NewCurrentShape.Description = NewCurrentShape.Description &amp; DescSelectColor
+
+End Sub
+
+Sub FillColorGroup(gStart,gEnd, i, j, SelectedThemeCode, DescSelectColor)
+	NewCurrentShape = SelectedShape.getByIndex(i).getByIndex(j)
+	
+	Dim oNewGradient as New com.sun.star.awt.Gradient
+	Dim oOldGradient as New com.sun.star.awt.Gradient
+	
+	with oNewGradient &apos;Assign new gradient to oNewGradient
+		.StartColor = gStart
+		.StartIntensity = 100
+		.EndColor = gEnd
+		.EndIntensity = 100
+	end with
+	
+	oObjectName = NewCurrentShape.Name
+	oOldGradient = NewCurrentShape.FillGradient &apos;Collect old gradient to oOldGradient
+	
+	If Left(oObjectName, 6) = &quot;Object&quot; Then
+
+		If NewCurrentShape.FillStyle = 1 Then &apos;Fill style 0 = none, 1 = solid, 2 = Gradient, 3 = Hatch, 4 = Bitmap
+			NewCurrentShape.FillColor = gStart
+		ElseIf NewCurrentShape.FillStyle = 2 Then &apos;Fill style 0 = none, 1 = solid, 2 = Gradient, 3 = Hatch, 4 = Bitmap
+			NewCurrentShape.FillGradient = oNewGradient
+		End If
+	ElseIf Left(oObjectName, 6) = &quot;Arrow&quot; &amp; j+1 Then &apos;merge by or
+
+		If NewCurrentShape.FillStyle = 1 Then &apos;Fill style 0 = none, 1 = solid, 2 = Gradient, 3 = Hatch, 4 = Bitmap
+			NewCurrentShape.FillColor = gStart
+		ElseIf NewCurrentShape.FillStyle = 2 Then &apos;Fill style 0 = none, 1 = solid, 2 = Gradient, 3 = Hatch, 4 = Bitmap
+			NewCurrentShape.FillGradient = oNewGradient
+		End If
+	End If
+	
+	NewCurrentShape.Description = SelectedThemeCode
+	NewCurrentShape.Description = NewCurrentShape.Description &amp; DescSelectColor
+
+End Sub
+</script:module>

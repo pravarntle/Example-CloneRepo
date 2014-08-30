@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="Dialog1" dlg:left="68" dlg:top="41" dlg:width="149" dlg:height="129" dlg:closeable="true" dlg:moveable="true">
+ <script:event script:event-name="on-keydown" script:macro-name="vnd.sun.star.script:SmartClipart.RunDialog.CheckKeyPress?language=Basic&amp;location=application" script:language="Script"/>
+ <dlg:bulletinboard>
+  <dlg:text dlg:id="Label1" dlg:tab-index="0" dlg:left="3" dlg:top="4" dlg:width="48" dlg:height="11" dlg:value="เลือก Theme"/>
+  <dlg:text dlg:id="Label2" dlg:tab-index="1" dlg:left="3" dlg:top="30" dlg:width="48" dlg:height="9" dlg:value="เลือกรูปแบบ"/>
+  <dlg:button dlg:id="CloseButton" dlg:tab-index="2" dlg:left="83" dlg:top="113" dlg:width="37" dlg:height="14" dlg:value="Close">
+   <script:event script:event-name="on-performaction" script:macro-name="vnd.sun.star.script:SmartFormat.RunDialog.ExitDialog?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:text dlg:id="Label3" dlg:tab-index="3" dlg:left="60" dlg:top="4" dlg:width="80" dlg:height="11" dlg:value="เลือกสี"/>
+  <dlg:radiogroup>
+   <dlg:radio dlg:id="Accent2" dlg:tab-index="7" dlg:left="60" dlg:top="32" dlg:width="73" dlg:height="15" dlg:value="Color 2" dlg:group-name="Radio1">
+    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.CheckTheme?language=Basic&amp;location=application" script:language="Script"/>
+   </dlg:radio>
+   <dlg:radio dlg:id="Accent1" dlg:tab-index="5" dlg:left="60" dlg:top="18" dlg:width="73" dlg:height="15" dlg:value="Color 1" dlg:group-name="Radio1">
+    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.CheckTheme?language=Basic&amp;location=application" script:language="Script"/>
+   </dlg:radio>
+   <dlg:radio dlg:id="Accent3" dlg:tab-index="8" dlg:left="60" dlg:top="47" dlg:width="73" dlg:height="15" dlg:value="Color 3" dlg:group-name="Radio1">
+    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.CheckTheme?language=Basic&amp;location=application" script:language="Script"/>
+   </dlg:radio>
+   <dlg:radio dlg:id="Accent4" dlg:tab-index="6" dlg:left="60" dlg:top="62" dlg:width="73" dlg:height="15" dlg:value="Color 4" dlg:group-name="Radio1">
+    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.CheckTheme?language=Basic&amp;location=application" script:language="Script"/>
+   </dlg:radio>
+   <dlg:radio dlg:id="Accent5" dlg:tab-index="9" dlg:left="60" dlg:top="77" dlg:width="73" dlg:height="15" dlg:value="Color 5" dlg:group-name="Radio1">
+    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.CheckTheme?language=Basic&amp;location=application" script:language="Script"/>
+   </dlg:radio>
+   <dlg:radio dlg:id="Accent6" dlg:tab-index="10" dlg:left="60" dlg:top="92" dlg:width="73" dlg:height="15" dlg:value="Color 6" dlg:group-name="Radio1">
+    <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.CheckTheme?language=Basic&amp;location=application" script:language="Script"/>
+   </dlg:radio>
+  </dlg:radiogroup>
+  <dlg:menulist dlg:id="ThemeList" dlg:tab-index="4" dlg:left="1" dlg:top="16" dlg:width="49" dlg:height="11" dlg:spin="true">
+   <dlg:menupopup>
+    <dlg:menuitem dlg:value="Colorful1"/>
+    <dlg:menuitem dlg:value="Colorful2"/>
+    <dlg:menuitem dlg:value="Colorful3"/>
+    <dlg:menuitem dlg:value="Colorful4"/>
+    <dlg:menuitem dlg:value="MonoRed"/>
+    <dlg:menuitem dlg:value="MonoPink"/>
+    <dlg:menuitem dlg:value="MonoPurple"/>
+    <dlg:menuitem dlg:value="MonoBlue"/>
+    <dlg:menuitem dlg:value="MonoTurquoise"/>
+    <dlg:menuitem dlg:value="MonoGreen"/>
+    <dlg:menuitem dlg:value="MonoYellow"/>
+    <dlg:menuitem dlg:value="MonoOrange"/>
+   </dlg:menupopup>
+   <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.ManageList.AddEffectListTemp?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:menulist>
+  <dlg:menulist dlg:id="EffectList" dlg:tab-index="11" dlg:left="1" dlg:top="42" dlg:width="52" dlg:height="84">
+   <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.ManageList.RadioColorTemp?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:menulist>
+ </dlg:bulletinboard>
+</dlg:window>

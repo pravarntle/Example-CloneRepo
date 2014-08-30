@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="FindSmartFormat" script:language="StarBasic">Function FindSmartGroup() as Object
+	CurrentShape = ThisComponent.getCurrentSelection
+	
+	If IsNull(CurrentShape) Then
+		FindSmartGroup() = nothing
+	ElseIf CurrentShape.SupportsService(&quot;com.sun.star.text.TextRanges&quot;) OR CurrentShape.SupportsService(&quot;com.sun.star.sheet.SheetCell&quot;) Then
+		FindSmartGroup() = nothing
+		Exit Function
+	Else
+		If Not CurrentShape.SupportsService(&quot;com.sun.star.text.TextRanges&quot;) AND Not CurrentShape.SupportsService(&quot;com.sun.star.sheet.SheetCell&quot;) AND Not CurrentShape.SupportsService(&quot;com.sun.star.sheet.SheetCellRange&quot;) AND CurrentShape.count &gt; 0 Then
+			If Not CurrentShape.getByIndex(0).supportsService(&quot;com.sun.star.drawing.GroupShape&quot;) OR CurrentShape.getByIndex(0).supportsService(&quot;com.sun.star.presentation.Shape&quot;) Then
+				FindSmartGroup() = CurrentShape
+				Exit Function
+			End If
+			
+			Dim group as Object
+			group = CurrentShape.getByIndex(0)
+			For i = 0 To group.count - 1	
+				If group.getByIndex(i).Name &lt;&gt; &quot;&quot; AND Left(group.getByIndex(i).Name, 5) &lt;&gt; &quot;Arrow&quot; Then
+					FindSmartGroup() = CurrentShape
+					Exit Function
+				End If
+			Next i
+			
+			FindSmartGroup() = group
+		End If
+	End If
+End Function
+</script:module>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="RunDialog" script:language="StarBasic">Sub RunDialog()
+	Dim NewSelectedShape as Object
+	Dim LastShape as Object
+	Dim LastShape2 as Object
+	
+	DialogLibraries.loadLibrary(&quot;SmartFormat&quot;)
+	
+	oLib = DialogLibraries.getByName(&quot;SmartFormat&quot;)
+	oLibDlg = oLib.getByName(&quot;SmartDialog&quot;)
+	
+	SmartDialog = CreateUnoDialog(oLibDlg)
+	
+	ThemeListbox = SmartDialog.getControl(&quot;ThemeList&quot;)
+	EffectListbox = SmartDialog.getControl(&quot;EffectList&quot;)
+	
+	DefineVariable()
+	SelectedShape = nothing
+	
+	SmartDialog.visible = true
+	
+	Do
+		LastShape2 = FindSmartGroup()
+		If Not isNull(LastShape2) Then
+		
+			If isNull(LastShape) Then
+				LastShape = LastShape2
+			End If
+	
+			If Not isNull(SelectedShape) AND SameObject(LastShape, LastShape2) Then
+				
+			ElseIf isNull(SelectedShape) Then
+				
+				If LastShape.count &gt; 0 Then
+					SelectedShape = LastShape
+					ThemeListbox.enable = True
+					EffectListbox.enable = True
+					AddEffectList(SelectedShape)
+					CheckSelectedColor(SelectedShape)
+				End If
+				
+			ElseIf Not isNull(SelectedShape) AND NOt SameObject(LastShape, LastShape2) Then
+				LastShape = LastShape2
+				NewSelectedShape = LastShape
+			End If
+				
+			If Not isNull(NewSelectedShape) Then
+				If NewSelectedShape.SupportsService(&quot;com.sun.star.text.TextCursor&quot;) Then
+		
+				ElseIf NewSelectedShape.SupportsService(&quot;com.sun.star.drawing.ShapeCollection&quot;) Then
+					If SelectedShape.count &lt;&gt; NewSelectedShape.count Then
+						
+						SelectedShape = NewSelectedShape
+						AddEffectList(SelectedShape)
+						CheckSelectedColor(SelectedShape)
+					ElseIf NewSelectedShape.getByIndex(0).Position.X &lt;&gt; SelectedShape.getByIndex(0).Position.X OR NewSelectedShape.getByIndex(0).Position.Y &lt;&gt; SelectedShape.getByIndex(0).Position.Y Then
+						SelectedShape = NewSelectedShape
+						CheckSelectedColor(SelectedShape)
+					End If
+				End If
+			ElseIf isNull(NewSelectedShape) Then
+			
+			End If
+		Else
+			ThemeListbox.enable = False
+			EffectListbox.enable = False
+			For i = 0 To UBound(AccentArray) &apos;disable all radio button
+				oButtonName = &quot;Accent&quot; &amp; i+1
+				oButton = SmartDialog.getControl(oButtonName)
+				oButton.enable = False
+			Next i
+			
+			SelectedShape = nothing
+		End If
+		
+		Wait(500)
+		
+	Loop While SmartDialog.model.CloseButton.State &lt;&gt; 1
+End Sub		
+		&apos;LastShape = ThisComponent.getCurrentSelection
+		
+&apos;		If LastShape.SupportsService(&quot;com.sun.star.text.TextRanges&quot;) = True OR LastShape.SupportsService(&quot;com.sun.star.sheet.SheetCell&quot;) = True Then
+&apos;		
+&apos;		ElseIf LastShape.SupportsService(&quot;com.sun.star.text.TextRanges&quot;) = False OR LastShape.SupportsService(&quot;com.sun.star.sheet.SheetCell&quot;) = False Then
+&apos;			If isNull(LastShape) = False Then
+&apos;				If isNull(SelectedShape) = False AND LastShape.count &lt;&gt; 0 Then
+&apos;					If SelectedShape.count &lt;&gt; LastShape.count OR SelectedShape.getByIndex(0).VertOrientPosition &lt;&gt; LastShape.getByIndex(0).VertOrientPosition Then
+&apos;						NewSelectedShape = LastShape
+&apos;					ElseIf SelectedShape.count = LastShape.count AND SelectedShape.getByIndex(0).VertOrientPosition = LastShape.getByIndex(0).VertOrientPosition Then
+&apos;					
+&apos;					Else
+&apos;						print &quot;???&quot;
+&apos;					End If
+&apos;					
+&apos;				ElseIf isNull(SelectedShape) = True Then
+&apos;					If LastShape.count = 0 Then
+&apos;						
+&apos;					ElseIf LastShape.count &lt;&gt; 0 Then
+&apos;						SelectedShape = LastShape
+&apos;						ThemeListbox.enable = True
+&apos;						EffectListbox.enable = True
+&apos;						
+&apos;						CheckSelectedColor(SelectedShape)
+&apos;					End If
+&apos;				ElseIf LastShape.SupportsService(&quot;com.sun.star.text.TextCursor&quot;) = True Then
+&apos;				
+&apos;				End If
+&apos;			ElseIf isNull(LastShape) = True Then
+&apos;				SelectedShape = LastShape	
+&apos;			End If
+&apos;			
+&apos;			If isNull(NewSelectedShape) = False Then
+&apos;				If NewSelectedShape.SupportsService(&quot;com.sun.star.text.TextCursor&quot;) = True Then
+&apos;				
+&apos;				ElseIf NewSelectedShape.SupportsService(&quot;com.sun.star.drawing.ShapeCollection&quot;) Then
+&apos;					If SelectedShape.count &lt;&gt; NewSelectedShape.count Then
+&apos;						SelectedShape = NewSelectedShape
+&apos;						
+&apos;						CheckSelectedColor(SelectedShape)
+&apos;					ElseIf NewSelectedShape.getByIndex(0).Position.X &lt;&gt; SelectedShape.getByIndex(0).Position.X OR NewSelectedShape.getByIndex(0).Position.Y &lt;&gt; SelectedShape.getByIndex(0).Position.Y Then
+&apos;						SelectedShape = NewSelectedShape
+&apos;						CheckSelectedColor(SelectedShape)
+&apos;					End If
+&apos;				End If
+&apos;			ElseIf isNull(LastShape) = True Then
+&apos;&apos;				ThemeListbox.enable = False
+&apos;				EffectListbox.enable = False
+&apos;				For i = 0 To UBound(AccentArray)
+&apos;					oRadioName = &quot;Accent&quot; &amp; i+1
+&apos;					oRadio1 = SmartDialog.getControl(oRadioName)
+&apos;					oRadio1.enable = False
+&apos;				Next i
+&apos;			End If
+&apos;	
+		
+&apos;	do
+&apos;		CheckObjectForUngroup()
+&apos;		
+&apos;		LastShape = a
+&apos;		NewSelectedShape = a
+&apos;		n = SmartDialog.model.CloseButton.State
+&apos;		LastShape = ThisComponent.getCurrentSelection
+&apos;		If LastShape.SupportsService(&quot;com.sun.star.text.TextRanges&quot;) = True OR LastShape.SupportsService(&quot;com.sun.star.sheet.SheetCell&quot;) = True Then
+&apos;		
+&apos;		ElseIf LastShape.SupportsService(&quot;com.sun.star.text.TextRanges&quot;) = False OR LastShape.SupportsService(&quot;com.sun.star.sheet.SheetCell&quot;) = False Then
+&apos;			If isNull(LastShape) = False Then
+&apos;				If isNull(SelectedShape) = False AND LastShape.count &lt;&gt; 0 Then
+&apos;					If SelectedShape.count &lt;&gt; LastShape.count OR SelectedShape.getByIndex(0).VertOrientPosition &lt;&gt; LastShape.getByIndex(0).VertOrientPosition Then
+&apos;						NewSelectedShape = LastShape
+&apos;					ElseIf SelectedShape.count = LastShape.count AND SelectedShape.getByIndex(0).VertOrientPosition = LastShape.getByIndex(0).VertOrientPosition Then
+&apos;					
+&apos;					Else
+&apos;						print &quot;???&quot;
+&apos;					End If
+&apos;					
+&apos;				ElseIf isNull(SelectedShape) = True Then
+&apos;					If LastShape.count = 0 Then
+&apos;						
+&apos;					ElseIf LastShape.count &lt;&gt; 0 Then
+&apos;						SelectedShape = LastShape
+&apos;						ThemeListbox.enable = True
+&apos;						EffectListbox.enable = True
+&apos;						
+&apos;						CheckSelectedColor()
+&apos;					End If
+&apos;				ElseIf LastShape.SupportsService(&quot;com.sun.star.text.TextCursor&quot;) = True Then
+&apos;				
+&apos;				End If
+&apos;			ElseIf isNull(LastShape) = True Then
+&apos;				SelectedShape = LastShape	
+&apos;			End If
+&apos;			
+&apos;			If isNull(NewSelectedShape) = False Then
+&apos;				If NewSelectedShape.SupportsService(&quot;com.sun.star.text.TextCursor&quot;) = True Then
+&apos;				
+&apos;				ElseIf NewSelectedShape.SupportsService(&quot;com.sun.star.drawing.ShapeCollection&quot;) Then
+&apos;					If SelectedShape.count &lt;&gt; NewSelectedShape.count Then
+&apos;						SelectedShape = NewSelectedShape
+&apos;						
+&apos;						CheckSelectedColor()
+&apos;					ElseIf NewSelectedShape.getByIndex(0).Position.X &lt;&gt; SelectedShape.getByIndex(0).Position.X OR NewSelectedShape.getByIndex(0).Position.Y &lt;&gt; SelectedShape.getByIndex(0).Position.Y Then
+&apos;						SelectedShape = NewSelectedShape
+&apos;						CheckSelectedColor()
+&apos;					End If
+&apos;				End If
+&apos;			ElseIf isNull(LastShape) = True Then
+&apos;				ThemeListbox.enable = False
+&apos;				EffectListbox.enable = False
+&apos;				For i = 0 To UBound(AccentArray)
+&apos;					oRadioName = &quot;Accent&quot; &amp; i+1
+&apos;					oRadio1 = SmartDialog.getControl(oRadioName)
+&apos;					oRadio1.enable = False
+&apos;				Next i
+&apos;			End If
+			
+&apos;			If n = 1 then exit do
+&apos;				wait (5)
+&apos;		End If
+&apos;	Loop
+	
+	
+	
+	
+	&apos;SelectedShape = ThisComponent.getCurrentSelection
+	&apos;xray ThisComponent.getCurrentSelection
+	&apos;do
+	&apos;	n = SmartDialog.model.CloseButton.State
+	&apos;	SelectedShape = ThisComponent.getCurrentSelection
+	&apos;	If isNull(SelectedShape) = False Then
+	&apos;		
+	&apos;		ThemeListbox.enable = True
+	&apos;		EffectListbox.enable = True
+	&apos;	
+	&apos;		CheckSelectedColor()
+	&apos;		do
+	&apos;			
+	&apos;			n = SmartDialog.model.CloseButton.State
+	&apos;			NewSelectedShape = ThisComponent.getCurrentSelection
+	&apos;			xray SelectedShape.getByIndex(0)
+	&apos;			&apos;a = Left(NewSelectedShape.getByIndex(0).getByIndex(0).Name, 6)
+	&apos;			SelectedShape = NewSelectedShape
+	&apos;			xray SelectedShape.getByIndex(0)
+	&apos;			&apos;a = Left(SelectedShape.getByIndex(0).getByIndex(0).Name, 6)
+	&apos;			&apos;xray SelectedShape.getByIndex(0)
+	&apos;			If isNull(NewSelectedShape) = False Then
+	&apos;			
+	&apos;				ThemeListbox.enable = True
+	&apos;				EffectListbox.enable = True
+	&apos;				If NewSelectedShape.SupportsService(&quot;com.sun.star.text.TextCursor&quot;) Then
+	&apos;				
+	&apos;				ElseIf NewSelectedShape.SupportsService(&quot;com.sun.star.drawing.ShapeCollection&quot;) Then
+	&apos;					If SelectedShape.count &lt;&gt; NewSelectedShape.count Then
+	&apos;						SelectedShape = NewSelectedShape
+	&apos;					
+	&apos;						CheckSelectedColor()
+	&apos;					ElseIf NewSelectedShape.getByIndex(0).Position.X &lt;&gt; SelectedShape.getByIndex(0).Position.X OR NewSelectedShape.getByIndex(0).Position.Y &lt;&gt; SelectedShape.getByIndex(0).Position.Y Then
+	&apos;						SelectedShape = NewSelectedShape
+	&apos;						CheckSelectedColor()
+	&apos;					End If
+	&apos;				End If
+&apos;
+&apos;				ElseIf isNull(NewSelectedShape) = True Then
+&apos;					ThemeListbox.enable = False
+&apos;					EffectListbox.enable = False
+&apos;					For i = 0 To UBound(AccentArray)
+&apos;						oRadioName = &quot;Accent&quot; &amp; i+1
+&apos;						oRadio1 = SmartDialog.getControl(oRadioName)
+&apos;						oRadio1.enable = False
+&apos;					Next i
+&apos;				EndIf
+&apos;				&apos;NewSelectedShape.Release()
+&apos;				&apos;SelectedShape.release()
+&apos;				&apos;xray SelectedShape
+&apos;				If n = 1 then exit do
+&apos;					wait (5)
+&apos;			Loop
+&apos;		ElseIf isNull(SelectedShape) = True Then
+&apos;			ThemeListbox.enable = False
+&apos;			EffectListbox.enable = False
+&apos;			For i = 0 To UBound(AccentArray)
+&apos;				oRadioName = &quot;Accent&quot; &amp; i+1
+&apos;				oRadio1 = SmartDialog.getControl(oRadioName)
+&apos;				oRadio1.enable = False
+&apos;			Next i
+&apos;		End If
+&apos;		
+&apos;		&apos;SelectedShape.release()
+&apos;		
+&apos;		If n = 1 then exit do
+&apos;			wait (5)
+&apos;	Loop
+	
+
+
+Sub ExitDialog()
+	SmartDialog.visible = False
+	SmartDialog.endExecute()
+	SmartDialog.model.CloseButton.State = 1
+End Sub
+
+Function SameObject(Shape1 as Object, Shape2 as Object) as Boolean
+	If Shape1.count = Shape2.count AND Shape1.getByIndex(0).Position.X = Shape2.getByIndex(0).Position.X AND Shape1.getByIndex(0).Position.Y = Shape2.getByIndex(0).Position.Y Then
+		DifObject = True
+	Else
+		DifObject = False
+	End If
+End Function
+</script:module>

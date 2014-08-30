@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE script:module PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "module.dtd">
+<script:module xmlns:script="http://openoffice.org/2000/script" script:name="AssignColor" script:language="StarBasic">Sub PushButton1()
+	ButtonState(&quot;Accent1&quot;)
+End Sub
+
+Sub PushButton2()
+	ButtonState(&quot;Accent2&quot;)
+End Sub
+
+Sub PushButton3()
+	ButtonState(&quot;Accent3&quot;)
+End Sub
+
+Sub PushButton4()
+	ButtonState(&quot;Accent4&quot;)
+End Sub
+
+Sub PushButton5()
+	ButtonState(&quot;Accent5&quot;)
+End Sub
+
+Sub PushButton6()
+	ButtonState(&quot;Accent6&quot;)
+End Sub
+
+Sub ButtonState(oAccentColor)
+	PosX = 4
+	PosY = 38
+	For i = 0 To UBound(AccentArray)
+
+		oButton = SmartDialog.getControl(&quot;Accent&quot;&amp;i+1)
+		oButton.Model.Width = 20
+		oButton.Model.Height = 20
+		oButton.Model.PositionX = PosX
+		oButton.Model.PositionY = PosY
+		PosX = PosX + 30
+	Next i
+	
+	SelectedButton = SmartDialog.getControl(oAccentColor)
+	SelectedButton.Model.Width = 24
+	SelectedButton.Model.Height = 24
+	SelectedButton.Model.PositionX = SelectedButton.Model.PositionX - 2
+	SelectedButton.Model.PositionY = SelectedButton.Model.PositionY - 2
+	
+	CheckTheme(oAccentColor)
+End Sub
+
+Sub CheckTheme(oAccentColor)
+	If EffectListbox.getSelectedItem = EffectArray(0) Then
+		SelectedColor = oAccentColor
+	Else
+		For i = 0 To UBound(EffectArray)-1
+			If EffectListbox.getSelectedItem = EffectArray(i) Then
+				SelectedColor = i
+				Exit For
+			End If
+		Next i
+	End If
+	
+	SelectedTheme = ThemeListbox.getSelectedItem()
+	
+	For i = 0 To UBound(ThemeArray)
+		If SelectedTheme = ThemeArray(i) Then
+			SelectedThemeCode = i
+			Exit For
+		End If
+	Next i
+
+	If SelectedShape.count &gt; 1 Then
+		AssignEffectColor(SelectedColor, SelectedThemeCode)
+	Else
+		AssignSolidColor(SelectedColor, SelectedThemeCode)
+	End If
+	
+End Sub
+
+Function AssignSolidColor(SelectedColor, SelectedThemeCode)
+	For i = 0 To UBound(AccentArray)
+		If SelectedColor = AccentArray(i)  Then
+			gStart = Acc(Eff(0 ,i), SelectedThemeCode, 1)
+			gEnd = Acc(Eff(0 ,i), SelectedThemeCode, 2)
+			DescSelectColor = AccentArray(i)
+			Exit For
+		End If
+	Next i
+	
+	FillColor(gStart, gEnd, 0, SelectedThemeCode, DescSelectColor)
+End Function
+
+Function AssignEffectColor(SelectedColor, SelectedThemeCode)
+	oCount = SelectedShape.count
+	oRound = int(oCount/6)
+	v = 0
+	While v &lt;= oRound
+		If v = oRound Then
+			oLoop = oCount-1 MOD 6
+		Else
+			oLoop = 5
+		End If
+		
+		For i = 0 To oLoop
+			For j = 0 To UBound(AccentArray)
+				If SelectedColor = AccentArray(j) Then
+					gStart = Acc(Eff(0, j), SelectedThemeCode, 1)
+					gEnd = Acc(Eff(0, j), SelectedThemeCode, 2)
+					DescSelectColor = AccentArray(j)
+					Exit For
+					
+				ElseIf SelectedColor = j Then
+					gStart = Acc(Eff(SelectedColor, i), SelectedThemeCode, 1)
+					gEnd = Acc(Eff(SelectedColor, i), SelectedThemeCode, 2)
+					DescSelectColor = &quot;Accent&quot; &amp; Eff(SelectedColor, i)+1
+					Exit For
+					
+				End If
+			Next j
+			If SelectedShape.getByIndex((v*6)+i).SupportsService(&quot;com.sun.star.drawing.GroupShape&quot;) Then
+				For k = 0 To SelectedShape.getByIndex((v*6)+i).count - 1
+					FillColorGroup(gStart, gEnd, (v*6)+i, k, SelectedThemeCode, DescSelectColor)
+				Next k
+			Else
+				FillColor(gStart, gEnd, (v*6)+i, SelectedThemeCode, DescSelectColor)
+			End If
+		Next i
+		oCount = oCount - 6
+		v = v + 1
+	WEnd
+	
+&apos;	For i = 0 To oCount - 1
+&apos;		For j = 0 To UBound(AccentArray)
+&apos;			If SelectedColor = AccentArray(j) Then
+&apos;				gStart = Acc(Eff(0, j), SelectedThemeCode, 1)
+&apos;				gEnd = Acc(Eff(0, j), SelectedThemeCode, 2)
+&apos;				DescSelectColor = AccentArray(j)
+&apos;				Exit For
+&apos;				
+&apos;			ElseIf SelectedColor = j Then
+&apos;				gStart = Acc(Eff(SelectedColor, i), SelectedThemeCode, 1)
+&apos;				gEnd = Acc(Eff(SelectedColor, i), SelectedThemeCode, 2)
+&apos;				DescSelectColor = &quot;Accent&quot; &amp; Eff(SelectedColor, i)+1
+&apos;				Exit For
+&apos;			End If
+&apos;		Next j
+&apos;		FillColor(gStart, gEnd, v+i, SelectedThemeCode, DescSelectColor)
+&apos;	Next i
+		
+End Function
+</script:module>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dlg:window PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "dialog.dtd">
+<dlg:window xmlns:dlg="http://openoffice.org/2000/dialog" xmlns:script="http://openoffice.org/2000/script" dlg:id="SmartDialog" dlg:left="215" dlg:top="61" dlg:width="178" dlg:height="136" dlg:closeable="true" dlg:moveable="true">
+ <dlg:styles>
+  <dlg:style dlg:style-id="0" dlg:border="none"/>
+ </dlg:styles>
+ <dlg:bulletinboard>
+  <dlg:menulist dlg:id="EffectList" dlg:tab-index="0" dlg:left="92" dlg:top="12" dlg:width="83" dlg:height="13" dlg:spin="true" dlg:linecount="10">
+   <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.ManageList.RadioColorTemp?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.EffectListComment?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mouseout" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.DialogComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:menulist>
+  <dlg:text dlg:id="ThemeLabel" dlg:tab-index="1" dlg:left="2" dlg:top="1" dlg:width="82" dlg:height="10" dlg:value="โทนสี"/>
+  <dlg:text dlg:id="PatternLabel" dlg:tab-index="2" dlg:left="92" dlg:top="1" dlg:width="82" dlg:height="10" dlg:value="รูปแบบการไล่สี"/>
+  <dlg:button dlg:id="CloseButton" dlg:tab-index="3" dlg:left="128" dlg:top="118" dlg:width="44" dlg:height="16" dlg:value="Close">
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:SmartFormat.RunDialog.ExitDialog?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.CloseComment?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mouseout" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.DialogComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:button>
+  <dlg:img dlg:style-id="0" dlg:id="Accent1" dlg:tab-index="4" dlg:left="4" dlg:top="38" dlg:width="20" dlg:height="20">
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.PushButton1?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ColorComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:img>
+  <dlg:img dlg:style-id="0" dlg:id="Accent2" dlg:tab-index="5" dlg:left="34" dlg:top="38" dlg:width="20" dlg:height="20" dlg:tabstop="true">
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.PushButton2?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ColorComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:img>
+  <dlg:img dlg:style-id="0" dlg:id="Accent3" dlg:tab-index="6" dlg:left="64" dlg:top="38" dlg:width="20" dlg:height="20">
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.PushButton3?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ColorComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:img>
+  <dlg:img dlg:style-id="0" dlg:id="Accent4" dlg:tab-index="7" dlg:left="94" dlg:top="38" dlg:width="20" dlg:height="20">
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.PushButton4?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ColorComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:img>
+  <dlg:img dlg:style-id="0" dlg:id="Accent5" dlg:tab-index="8" dlg:left="124" dlg:top="38" dlg:width="20" dlg:height="20">
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.PushButton5?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ColorComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:img>
+  <dlg:img dlg:style-id="0" dlg:id="Accent6" dlg:tab-index="9" dlg:left="154" dlg:top="38" dlg:width="20" dlg:height="20">
+   <script:event script:event-name="on-mousedown" script:macro-name="vnd.sun.star.script:SmartFormat.AssignColor.PushButton6?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ColorComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:img>
+  <dlg:text dlg:id="CommentLabel" dlg:tab-index="10" dlg:left="4" dlg:top="66" dlg:width="116" dlg:height="66" dlg:value="เลือกโทนสี หลังจากนั้นเลือกรูปแบบการไล่สี แล้วเลือกสีที่ต้องการ&#x0a;&#x0a;หากเลือกวัตถุมากกว่า 1 ชิ้น จะสามารถเลือกรูปแบบการไล่สีอัตโนมัติได้ในช่องรูปแบบการไล่สี" dlg:multiline="true">
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.DialogComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:text>
+  <dlg:titledbox dlg:id="CommentColor" dlg:tab-index="11" dlg:left="-151" dlg:top="152" dlg:width="177" dlg:height="38">
+   <dlg:title dlg:value="เลือกสี"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ColorComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:titledbox>
+  <dlg:menulist dlg:id="ThemeList" dlg:tab-index="12" dlg:left="2" dlg:top="12" dlg:width="84" dlg:height="13" dlg:spin="true" dlg:linecount="15">
+   <dlg:menupopup>
+    <dlg:menuitem dlg:value="Colorful1"/>
+    <dlg:menuitem dlg:value="Colorful2"/>
+    <dlg:menuitem dlg:value="Colorful3"/>
+    <dlg:menuitem dlg:value="Colorful4"/>
+    <dlg:menuitem dlg:value="MonoRed"/>
+    <dlg:menuitem dlg:value="MonoPink"/>
+    <dlg:menuitem dlg:value="MonoPurple"/>
+    <dlg:menuitem dlg:value="MonoBlue"/>
+    <dlg:menuitem dlg:value="MonoTurquoise"/>
+    <dlg:menuitem dlg:value="MonoGreen"/>
+    <dlg:menuitem dlg:value="MonoYellow"/>
+    <dlg:menuitem dlg:value="MonoOrange"/>
+   </dlg:menupopup>
+   <script:event script:event-name="on-itemstatechange" script:macro-name="vnd.sun.star.script:SmartFormat.ManageList.AddEffectListTemp?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mousemove" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.ThemeListComment?language=Basic&amp;location=application" script:language="Script"/>
+   <script:event script:event-name="on-mouseout" script:macro-name="vnd.sun.star.script:SmartFormat.ChangeComment.DialogComment?language=Basic&amp;location=application" script:language="Script"/>
+  </dlg:menulist>
+  <dlg:text dlg:id="ColorLabel" dlg:tab-index="13" dlg:left="4" dlg:top="28" dlg:width="50" dlg:height="8" dlg:value="เลือกสี"/>
+ </dlg:bulletinboard>
+</dlg:window>

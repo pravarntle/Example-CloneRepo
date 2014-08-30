@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE library:library PUBLIC "-//OpenOffice.org//DTD OfficeDocument 1.0//EN" "library.dtd">
+<library:library xmlns:library="http://openoffice.org/2000/library" library:name="SmartFormat" library:readonly="false" library:passwordprotected="false">
+ <library:element library:name="AssignColor"/>
+ <library:element library:name="DefineColor"/>
+ <library:element library:name="FindSmartFormat"/>
+ <library:element library:name="ManageList"/>
+ <library:element library:name="RunDialog"/>
+ <library:element library:name="SmartClipart"/>
+ <library:element library:name="Module1"/>
+ <library:element library:name="ChangeComment"/>
+</library:library>
